@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// ServeRandomCards takes an array of decks and returns a channel in which random cards are sent
 func ServeRandomCards(decks models.Decks) <-chan models.Card {
 
 	allCards := models.Cards{}

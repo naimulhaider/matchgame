@@ -20,6 +20,7 @@ func NewMatchGame(opts ...GameOption) MatchGame {
 	return matchGame
 }
 
+// Play takes a channel of cards and plays the Match! game - if any two consecutive cards are matched by `Matcher`, a winner is selected according to `Judge` and the card is sent into the channel of the winning Player
 func (g MatchGame) Play(cardDealer <-chan models.Card) (<-chan models.Card, <-chan models.Card) {
 
 	p1Cards := make(chan models.Card)
@@ -30,7 +31,7 @@ func (g MatchGame) Play(cardDealer <-chan models.Card) (<-chan models.Card, <-ch
 		close(p2Cards)
 	}
 
-	// flushCards sends the cards to the channel for the player
+	// flushCards sends the supplied cards to the channel of the player
 	flushCards := func(cards models.Cards, player enums.Player) {
 		for _, card := range cards {
 			if player == enums.Player1 {
@@ -41,6 +42,7 @@ func (g MatchGame) Play(cardDealer <-chan models.Card) (<-chan models.Card, <-ch
 		}
 	}
 
+	// read all dealed cards, store all unmatched cards in a buffer, and flush the cards to player's channel when there is a match
 	go func() {
 		defer closeChannels()
 

@@ -34,7 +34,7 @@ func NewStandardDeck() (d models.Deck) {
 	return
 }
 
-// TallyResults counts the number of cards from the channels and declares a winner
+// TallyResults counts the number of cards from the channels for each player and declares a winner
 func TallyResults(p1Cards, p2Cards <-chan models.Card) {
 
 	var p1CardsCount, p2CardsCount int64
